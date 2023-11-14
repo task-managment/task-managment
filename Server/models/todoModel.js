@@ -22,6 +22,10 @@ const todoSchema = new mongoose.Schema({
       type: Date,
       required: true
     },
+    priority : {
+      type: String,
+      required: true
+    },
     created_at: {
       type: Date,
       default: Date.now

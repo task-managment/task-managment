@@ -8,6 +8,7 @@ const newTodo = async (req, res) => {
             title: formData.title,
             description: formData.description,
             duedate: formData.duedate,
+            priority : formData.priority,
             user: userID
         });
 
