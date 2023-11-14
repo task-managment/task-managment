@@ -8,7 +8,7 @@ function TaskForm() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [duedate, setDueDate] = useState("");
   const [priority, setPriority] = useState("high");
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function TaskForm() {
     const newTask = {
       title,
       description,
-      dueDate,
+      duedate,
       priority,
       completed: false,
     };
@@ -76,15 +76,15 @@ function TaskForm() {
 
         <div className="mb-4">
           <label
-            htmlFor="dueDate"
+            htmlFor="duedate"
             className="block text-gray-700 font-bold mb-2"
           >
             Due Date:
           </label>
           <input
-            id="dueDate"
+            id="duedate"
             type="date"
-            value={dueDate}
+            value={duedate}
             onChange={(e) => setDueDate(e.target.value)}
             className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
           />

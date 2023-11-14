@@ -2,36 +2,43 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Complete React Project",
-      "description": "Finish the project using React and Redux.",
+      "title": "Complete project proposal",
+      "description": "Write and submit the project proposal by the end of the week.",
       "completed": true,
-      "dueDate": "2023-12-01",
+      "dueDate": "2023-12-15",
       "priority": "high"
+    },
+    {
+      "id": 2,
+      "title": "Buy groceries",
+      "description": "Pick up the groceries for the week, including milk, eggs, and vegetables.",
+      "completed": false,
+      "dueDate": "2023-12-10",
+      "priority": "medium"
+    },
+    {
+      "id": 3,
+      "title": "Call John",
+      "description": "Call John to discuss the upcoming meeting agenda.",
+      "completed": true,
+      "dueDate": "2023-12-18",
+      "priority": "low"
+    },
+    {
+      "id": 4,
+      "title": "Prepare presentation",
+      "description": "Create a presentation for the team meeting next week.",
+      "completed": false,
+      "dueDate": "2023-12-20",
+      "priority": "medium"
     },
     {
       "id": 5,
-      "title": "Learn New Skill",
-      "description": "Take an online course to learn a new skill.",
-      "completed": false,
-      "dueDate": "2024-01-01",
-      "priority": "high"
-    },
-    {
-      "title": "Finish todays task",
-      "description": "A task for practicing Redux (todo app)",
-      "dueDate": "2023-11-13",
-      "priority": "high",
-      "completed": false,
-      "id": 16
-    },
-    {
-      "title": "SkinCare",
-      "description": "Wash my face and moistrize it.",
-      "dueDate": "2023-11-17",
-      "priority": "medium",
-      "completed": false,
-      "id": 17
+      "title": "Read book",
+      "description": "Start reading the new novel you bought last month.",
+      "completed": true,
+      "dueDate": "2023-12-25",
+      "priority": "low"
     }
-   
   ]
 }

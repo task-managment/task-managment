@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTasks, deleteTask, updateTask } from "../redux/taskSlice";
+import {
+  fetchTasks,
+  deleteTask,
+  updateTask,
+  updateState,
+} from "../redux/taskSlice";
 import deletee from "../delete.png";
 import edit from "../edit.png";
 
@@ -19,10 +24,12 @@ function Home() {
     completed: "",
   });
   const [filterStatus, setFilterStatus] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     dispatch(fetchTasks());
   }, [dispatch]);
+
   const handleDelete = async (taskId) => {
     try {
       await dispatch(deleteTask(taskId));
@@ -41,16 +48,42 @@ function Home() {
       console.error("Error updating task:", error);
     }
   };
-
-  const filteredTasks = tasks.filter((task) => {
-    if (filterStatus === "all") {
-      return true;
+  const handleState = async (taskId, completed) => {
+    try {
+      await dispatch(updateState({ taskId, completed: !completed }));
+    } catch (error) {
+      console.error("Error updating task:", error);
     }
-    return task.completed === (filterStatus === "completed");
+  };
+  const filteredTasks = tasks.filter((task) => {
+    const searchTerm = searchQuery.toLowerCase();
+    const title = task.title?.toLowerCase() || ""; // Safeguard against undefined/null
+    const description = task.description?.toLowerCase() || "";
+
+    const matchesSearch =
+      title.includes(searchTerm) || description.includes(searchTerm);
+
+    // Check if the task matches the completion status filter
+    const matchesStatus =
+      filterStatus === "all" ||
+      (filterStatus === "completed" && task.completed) ||
+      (filterStatus === "pending" && !task.completed);
+
+    // Return true if it matches the search term and status filter
+    return matchesSearch && matchesStatus;
   });
   return (
     <>
       <Header />
+      <div className="flex flex-col items-start mx-16 my-5">
+        <input
+          type="text"
+          placeholder="Search tasks..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+        />
+      </div>
       <div className="flex flex-col items-start mx-16 my-5">
         <div className="mb-4">
           <select
@@ -71,7 +104,7 @@ function Home() {
             key={task.id}
             className="card flex flex-row w-96 h-56 py-5 px-5  gap-10 mr-6 bg-pink-100 shadow-xl mb-4"
           >
-            <div className="card-body">
+            <div className="card-body w-full">
               <h2 className="card-title font-bold font-style: italic">
                 {task.title}
               </h2>
@@ -80,30 +113,39 @@ function Home() {
                 <li className="mb-2"> {task.dueDate}</li>
                 <li className="mb-2"> {task.priority}</li>
               </ul>
-              <p> {task.completed ? "Completed" : "Pending"}</p>
-              <div className=" card-actions flex flex-row justify-end ">
+
+              <div className=" card-actions flex flex-row justify-between ">
                 <button
-                  onClick={() => {
-                    setUpdatedTask({
-                      id: task.id,
-                      title: task.title,
-                      description: task.description,
-                      dueDate: task.dueDate,
-                      priority: task.priority,
-                      completed: task.completed,
-                    });
-                    setUpdateFormOpen(true);
-                  }}
-                  className="text-pink-700 mr-2 hover:text-pink-800 rounded-md text-white "
+                  onClick={() => handleState(task.id)}
+                  className="bg-pink-700 mr-2 hover:bg-pink-800 rounded-md text-white w-20"
                 >
-                  <img className="  h-6 w-6 " src={edit} alt="" />
+                  {" "}
+                  {task.completed ? "Completed" : "Pending"}
                 </button>
-                <button
-                  onClick={() => handleDelete(task.id)}
-                  className="  text-pink-700 hover:text-pink-800 rounded-md text-white "
-                >
-                  <img className=" h-6 w-6 " src={deletee} alt="" />
-                </button>
+                <div>
+                  <button
+                    onClick={() => {
+                      setUpdatedTask({
+                        id: task.id,
+                        title: task.title,
+                        description: task.description,
+                        dueDate: task.dueDate,
+                        priority: task.priority,
+                        completed: task.completed,
+                      });
+                      setUpdateFormOpen(true);
+                    }}
+                    className="text-pink-700 mr-2 hover:text-pink-800 rounded-md "
+                  >
+                    <img className="  h-6 w-6 " src={edit} alt="" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(task.id)}
+                    className="  text-pink-700 hover:text-pink-800 rounded-md "
+                  >
+                    <img className=" h-6 w-6 " src={deletee} alt="" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
