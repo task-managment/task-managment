@@ -1,0 +1,37 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Complete React Project",
+      "description": "Finish the project using React and Redux.",
+      "completed": true,
+      "dueDate": "2023-12-01",
+      "priority": "high"
+    },
+    {
+      "id": 5,
+      "title": "Learn New Skill",
+      "description": "Take an online course to learn a new skill.",
+      "completed": false,
+      "dueDate": "2024-01-01",
+      "priority": "high"
+    },
+    {
+      "title": "Finish todays task",
+      "description": "A task for practicing Redux (todo app)",
+      "dueDate": "2023-11-13",
+      "priority": "high",
+      "completed": false,
+      "id": 16
+    },
+    {
+      "title": "SkinCare",
+      "description": "Wash my face and moistrize it.",
+      "dueDate": "2023-11-17",
+      "priority": "medium",
+      "completed": false,
+      "id": 17
+    }
+   
+  ]
+}
