@@ -19,7 +19,7 @@ function TaskForm() {
       description,
       duedate,
       priority,
-      completed: false,
+      status: false,
     };
 
     try {

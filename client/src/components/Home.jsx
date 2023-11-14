@@ -21,7 +21,7 @@ function Home() {
     description: "",
     dueDate: "",
     priority: "",
-    completed: "",
+    status: "",
   });
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -48,9 +48,9 @@ function Home() {
       console.error("Error updating task:", error);
     }
   };
-  const handleState = async (taskId, completed) => {
+  const handleState = async (taskId, status) => {
     try {
-      await dispatch(updateState({ taskId, completed: !completed }));
+      await dispatch(updateState({ taskId, status: !status }));
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -66,8 +66,8 @@ function Home() {
     // Check if the task matches the completion status filter
     const matchesStatus =
       filterStatus === "all" ||
-      (filterStatus === "completed" && task.completed) ||
-      (filterStatus === "pending" && !task.completed);
+      (filterStatus === "completed" && task.status) ||
+      (filterStatus === "pending" && !task.status);
 
     // Return true if it matches the search term and status filter
     return matchesSearch && matchesStatus;
@@ -116,22 +116,22 @@ function Home() {
 
               <div className=" card-actions flex flex-row justify-between ">
                 <button
-                  onClick={() => handleState(task.id)}
+                  onClick={() => handleState(task._id)}
                   className="bg-pink-700 mr-2 hover:bg-pink-800 rounded-md text-white w-20"
                 >
                   {" "}
-                  {task.completed ? "Completed" : "Pending"}
+                  {task.status ? "Completed" : "Pending"}
                 </button>
                 <div>
                   <button
                     onClick={() => {
                       setUpdatedTask({
-                        id: task.id,
+                        id: task._id,
                         title: task.title,
                         description: task.description,
                         dueDate: task.dueDate,
                         priority: task.priority,
-                        completed: task.completed,
+                        status: task.status,
                       });
                       setUpdateFormOpen(true);
                     }}
@@ -206,11 +206,11 @@ function Home() {
                 Due Date:
               </label>
               <input
-                id="dueDate"
+                id="duedate"
                 type="date"
                 value={updatedTask.dueDate}
                 onChange={(e) =>
-                  setUpdatedTask({ ...updatedTask, dueDate: e.target.value })
+                  setUpdatedTask({ ...updatedTask, duedate: e.target.value })
                 }
                 className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
