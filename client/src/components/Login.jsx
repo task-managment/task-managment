@@ -21,19 +21,19 @@ function Login() {
     });
   };
 
-  const validatePassword = (password) => {
-    const regex =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
-    if (!regex.test(password)) {
-      return "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one numeric digit, and one special character";
-    }
-    return "";
-  };
+  // const validatePassword = (password) => {
+  //   const regex =
+  //     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+  //   if (!regex.test(password)) {
+  //     return "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one numeric digit, and one special character";
+  //   }
+  //   return "";
+  // };
 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const passwordError = validatePassword(formData.password);
+    // const passwordError = validatePassword(formData.password);
     // if (passwordError) {
     //   setPasswordError(passwordError);
     //   return;

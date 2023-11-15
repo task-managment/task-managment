@@ -21,7 +21,7 @@ function Home() {
     description: "",
     dueDate: "",
     priority: "",
-    completed: "",
+    status: "",
   });
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,6 +32,7 @@ function Home() {
 
   const handleDelete = async (taskId) => {
     try {
+      console.log(taskId);
       await dispatch(deleteTask(taskId));
       dispatch(fetchTasks());
     } catch (error) {
@@ -41,6 +42,7 @@ function Home() {
 
   const handleUpdate = async () => {
     try {
+      console.log(updatedTask);
       await dispatch(updateTask(updatedTask));
       dispatch(fetchTasks());
       setUpdateFormOpen(false);
@@ -48,9 +50,10 @@ function Home() {
       console.error("Error updating task:", error);
     }
   };
-  const handleState = async (taskId, completed) => {
+  const handleState = async (taskId, status) => {
     try {
-      await dispatch(updateState({ taskId, completed: !completed }));
+      await dispatch(updateState({ taskId, status: !status }));
+      dispatch(fetchTasks());
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -66,8 +69,8 @@ function Home() {
     // Check if the task matches the completion status filter
     const matchesStatus =
       filterStatus === "all" ||
-      (filterStatus === "completed" && task.completed) ||
-      (filterStatus === "pending" && !task.completed);
+      (filterStatus === "completed" && task.status) ||
+      (filterStatus === "pending" && !task.status);
 
     // Return true if it matches the search term and status filter
     return matchesSearch && matchesStatus;
@@ -101,7 +104,7 @@ function Home() {
       <div className="flex flex-wrap justify-center items-center my-5 ">
         {filteredTasks.map((task) => (
           <div
-            key={task.id}
+            key={task._id}
             className="card flex flex-row w-96 h-56 py-5 px-5  gap-10 mr-6 bg-pink-100 shadow-xl mb-4"
           >
             <div className="card-body w-full">
@@ -116,22 +119,22 @@ function Home() {
 
               <div className=" card-actions flex flex-row justify-between ">
                 <button
-                  onClick={() => handleState(task.id)}
+                  onClick={() => handleState(task._id)}
                   className="bg-pink-700 mr-2 hover:bg-pink-800 rounded-md text-white w-20"
                 >
                   {" "}
-                  {task.completed ? "Completed" : "Pending"}
+                  {task.status ? "Completed" : "Pending"}
                 </button>
                 <div>
                   <button
                     onClick={() => {
                       setUpdatedTask({
-                        id: task.id,
+                        id: task._id,
                         title: task.title,
                         description: task.description,
                         dueDate: task.dueDate,
                         priority: task.priority,
-                        completed: task.completed,
+                        status: task.status,
                       });
                       setUpdateFormOpen(true);
                     }}
@@ -140,7 +143,7 @@ function Home() {
                     <img className="  h-6 w-6 " src={edit} alt="" />
                   </button>
                   <button
-                    onClick={() => handleDelete(task.id)}
+                    onClick={() => handleDelete(task._id)}
                     className="  text-pink-700 hover:text-pink-800 rounded-md "
                   >
                     <img className=" h-6 w-6 " src={deletee} alt="" />
@@ -206,11 +209,11 @@ function Home() {
                 Due Date:
               </label>
               <input
-                id="dueDate"
+                id="duedate"
                 type="date"
                 value={updatedTask.dueDate}
                 onChange={(e) =>
-                  setUpdatedTask({ ...updatedTask, dueDate: e.target.value })
+                  setUpdatedTask({ ...updatedTask, duedate: e.target.value })
                 }
                 className="w-full p-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               />
