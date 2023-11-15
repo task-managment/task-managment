@@ -53,7 +53,9 @@ function Home() {
   const handleState = async (taskId, status) => {
     try {
       await dispatch(updateState({ taskId, status: !status }));
+
       dispatch(fetchTasks());
+
     } catch (error) {
       console.error("Error updating task:", error);
     }
