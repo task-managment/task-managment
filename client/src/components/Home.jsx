@@ -32,6 +32,7 @@ function Home() {
 
   const handleDelete = async (taskId) => {
     try {
+      console.log(taskId);
       await dispatch(deleteTask(taskId));
       dispatch(fetchTasks());
     } catch (error) {
@@ -41,6 +42,7 @@ function Home() {
 
   const handleUpdate = async () => {
     try {
+      console.log(updatedTask);
       await dispatch(updateTask(updatedTask));
       dispatch(fetchTasks());
       setUpdateFormOpen(false);
@@ -51,6 +53,9 @@ function Home() {
   const handleState = async (taskId, status) => {
     try {
       await dispatch(updateState({ taskId, status: !status }));
+
+      dispatch(fetchTasks());
+
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -101,7 +106,7 @@ function Home() {
       <div className="flex flex-wrap justify-center items-center my-5 ">
         {filteredTasks.map((task) => (
           <div
-            key={task.id}
+            key={task._id}
             className="card flex flex-row w-96 h-56 py-5 px-5  gap-10 mr-6 bg-pink-100 shadow-xl mb-4"
           >
             <div className="card-body w-full">
@@ -140,7 +145,7 @@ function Home() {
                     <img className="  h-6 w-6 " src={edit} alt="" />
                   </button>
                   <button
-                    onClick={() => handleDelete(task.id)}
+                    onClick={() => handleDelete(task._id)}
                     className="  text-pink-700 hover:text-pink-800 rounded-md "
                   >
                     <img className=" h-6 w-6 " src={deletee} alt="" />

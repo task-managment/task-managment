@@ -21,10 +21,18 @@ export const addTask = createAsyncThunk("tasks/addTask", async (task) => {
 export const updateTask = createAsyncThunk("tasks/updateTask", async (task) => {
   try {
     const response = await axios.put(
+
+      `http://localhost:5000/updatetodo/${task.id}`,
+
+      task
+    );
+    console.log(response);
+
       `http://localhost:5000/updatetodo/${task._id}`,
 
       task
     );    console.log(response);
+
     return response.data;
   } catch (error) {
     throw error;
@@ -32,16 +40,24 @@ export const updateTask = createAsyncThunk("tasks/updateTask", async (task) => {
 });
 export const updateState = createAsyncThunk(
   "tasks/updateState",
-  async ({ taskId, completed }) => {
+  async ({ taskId, status }) => {
     try {
       const response = await axios.put(
         `http://localhost:5000/updatestatus/${taskId}`,
+
+
+        { status }
+      );
+
+      return { taskId, status: response.data.status }; // Return the updated data
+
         
         { completed }
         
       );
   
       return { taskId, completed: response.data.completed }; // Return the updated data
+
     } catch (error) {
       throw error;
     }
@@ -53,6 +69,7 @@ export const deleteTask = createAsyncThunk(
   "tasks/deleteTask",
   async (taskId) => {
     try {
+      console.log(taskId);
       await axios.put(`http://localhost:5000/deletetodo/${taskId}`);
       return taskId;
     } catch (error) {
@@ -102,13 +119,15 @@ const tasksSlice = createSlice({
           taskToUpdate.completed = completed;
         }
       })
-    
+
 
       .addCase(updateTask.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-     
+
+
+    
       .addCase(deleteTask.pending, (state) => {
         state.status = "loading";
       })
