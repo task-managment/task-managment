@@ -4,14 +4,6 @@ const newTodo = async (req, res) => {
     // const userID = req.user._id;
     const formData = req.body;
 
-    const newTodo = new Todo({
-      title: formData.title,
-      description: formData.description,
-      duedate: formData.duedate,
-      priority: formData.priority,
-      //user: userID
-    });
-
     const todo = await newTodo.save();
     res.json(todo);
     console.log(formData);
